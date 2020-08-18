@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="th">
+	<head>
+		<title>ผมจะสั่งสอนคุณเอง Generator</title>
+
+		<meta charset="utf8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+		<style>
+			:root {
+				--title: #333;
+				--content: #757575;
+
+				--link: #009bff;
+				--link-overlay: rgba(0, 123, 255, 0.125);
+
+				--border: #ceced2;
+				--preload: #efeff4;
+				--background: #fafafa;
+			}
+
+			* {
+				font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
+					Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
+					'Helvetica Neue', sans-serif;
+				box-sizing: border-box;
+			}
+
+			#body {
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				min-height: 100vh;
+				margin: 0;
+				padding: 0 20px;
+				background-color: var(--background);
+			}
+
+			#title {
+				position: absolute;
+				top: calc(5vh + 20px);
+				color: var(--content);
+				font-size: 24px;
+				font-weight: 300;
+				margin: 0 0 28px 0;
+				text-align: center;
+			}
+
+			#result {
+				width: 600px;
+				margin: 0 auto;
+				border-radius: 8px;
+				box-shadow: 0 8px 36px rgba(0, 0, 0, 0.05);
+			}
+
+			#controller {
+				display: flex;
+				flex-direction: row;
+				justify-content: center;
+				align-items: center;
+				margin: 40px 0 0 0;
+			}
+
+			#name {
+				appearance: none;
+				-webkit-appearance: none;
+				font-size: 18px;
+				color: var(--title);
+				height: 40px;
+				margin: 0 16px 0 0;
+				padding: 8px 12px;
+				border-radius: 4px;
+				border: 1px solid var(--border);
+				background-color: var(--background);
+				transition: box-shadow 0.2s ease-out;
+				outline: none;
+			}
+
+			#name:hover,
+			#name:focus {
+				box-shadow: 0 0 0 2px var(--title);
+			}
+
+			#change-profile {
+				appearance: none;
+				-webkit-appearance: none;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				width: 40px;
+				height: 40px;
+				background-color: var(--preload);
+				border-radius: 4px;
+				padding: 0;
+				border: 0;
+				transition: background-color 0.2s ease-out,
+					box-shadow 0.2s ease-out;
+				outline: none;
+				cursor: pointer;
+			}
+
+			#change-profile:hover,
+			#change-profile:focus {
+				background-color: var(--link-overlay);
+				box-shadow: 0 0 0 2px var(--link);
+			}
+
+			#change-profile > .icon {
+				transition: stroke 0.2s ease-out;
+			}
+
+			#change-profile:hover > .icon,
+			#change-profile:focus > .icon {
+				margin: 0;
+				stroke: var(--link);
+			}
+
+			#canvas,
+			#profile-file,
+			#profile {
+				display: none;
+			}
+
+			#github {
+				position: absolute;
+				bottom: calc(6.25vh + 20px);
+				width: 40px;
+				height: 40px;
+				padding: 4px;
+				opacity: 0.2;
+				outline: none;
+				transition: opacity 0.2s;
+			}
+
+			#github > .icon {
+				width: 100%;
+				margin: 0;
+			}
+
+			#github:hover,
+			#github:focus {
+				opacity: 0.5;
+			}
+
+			@supports (-webkit-overflow-scrolling: touch) {
+				#body {
+					min-height: -webkit-fill-content;
+				}
+			}
+
+			@media (max-width: 568px) {
+				#result {
+					width: 100%;
+				}
+			}
+
+			@media (max-height: 540px) {
+				#title {
+					display: none;
+				}
+
+				#github {
+					right: 40px;
+				}
+			}
+
+			@media (min-width: 568px) and (max-width: 767.9px) {
+				#result {
+					width: 90%;
+				}
+			}
+
+			@media (prefers-color-scheme: dark) {
+				:root {
+					--title: #eee;
+					--content: #757575;
+
+					--link: #0069ff;
+					--link-overlay: rgba(0, 123, 255, 0.125);
+
+					--border: #444;
+					--preload: #444;
+					--background: #313131;
+				}
+
+				#github {
+					opacity: 0.8;
+				}
+
+				#github:hover,
+				#github:focus {
+					opacity: 1;
+				}
+			}
+		</style>
+		<script src="/index.js"></script>
+
+		<!-- SEO -->
+		<meta name="title" content="สั่งสอนผมด้วยครับ Generator" />
+		<meta name="description" content="สวัสดีครับแอดมิน สั่งสอนผมด้วยครับ" />
+		<meta name="author" content="SaltyAom" />
+		<link rel="icon" href="/assets/mikudayo.png" />
+		<link rel="shortcut icon" href="/assets/mikudayo.png" />
+
+		<!-- Open Graph -->
+		<link
+			rel="canonical"
+			href="https://phom-ja-sung-sorn-khun-aeng.saltyaom.com"
+		/>
+		<meta property="og:title" content="ผมจะสั่งสอนคุณเอง Generator" />
+		<meta
+			property="og:description"
+			content="สวัสดีครับแอดมิน ผมจะสั่งสอนคุณเอง"
+		/>
+		<meta property="article:author" content="SaltyAom" />
+		<meta property="og:site_name" content="สั่งสอนผมด้วยครับ Generator" />
+		<meta
+			property="og:image"
+			content="https://phom-ja-sung-sorn-khun-aeng.saltyaom.com/assets/phom-ja-sung-sorn-khun-aeng.jpg"
+		/>
+		<meta property="og:image:width" content="1920" />
+		<meta property="og:image:height" content="1080" />
+		<meta property="og:locale" content="en_US" />
+		<meta property="og:type" content="website" />
+
+		<!-- Twitter Card -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content="สั่งสอนผมด้วยครับ Generator" />
+		<meta
+			name="twitter:description"
+			content="สวัสดีครับแอดมิน สั่งสอนผมด้วยครับ"
+		/>
+		<meta name="twitter:site" content="@SaltyAom" />
+		<meta
+			name="twitter:image"
+			content="https://phom-ja-sung-sorn-khun-aeng.saltyaom.com/assets/phom-ja-sung-sorn-khun-aeng.jpg"
+		/>
+		<meta name="twitter:creator" content="@SaltyAom" />
+	</head>
+	<body id="body">
+		<h1 id="title">ผมจะสั่งสอนคุณเอง Generator</h1>
+		<img
+			id="result"
+			src="/assets/pre-generated.jpg"
+			alt="สั่งสอนผมด้วยครับ"
+		/>
+
+		<section id="controller">
+			<input id="name" type="text" placeholder="ชื่อ" autocomplete="off" />
+			<button id="change-profile">
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="24"
+					height="24"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="var(--content)"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					class="icon"
+				>
+					<rect
+						x="3"
+						y="3"
+						width="18"
+						height="18"
+						rx="2"
+						ry="2"
+					></rect>
+					<circle cx="8.5" cy="8.5" r="1.5"></circle>
+					<polyline points="21 15 16 10 5 21"></polyline>
+				</svg>
+			</button>
+		</section>
+
+		<a
+			id="github"
+			target="_blank"
+			href="https://github.com/SaltyAom/phom-ja-sung-sorn-khun-aeng"
+			rel="noreopener norefferer"
+		>
+			<img
+				class="icon"
+				src="https://cdn.jsdelivr.net/npm/simple-icons@v2/icons/github.svg"
+			/>
+		</a>
+
+		<input id="profile-file" type="file" accept="image/*" />
+		<canvas id="canvas"></canvas>
+		<img id="profile" src="/assets/suku.jpg" />
+	</body>
+</html>
